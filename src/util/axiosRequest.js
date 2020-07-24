@@ -1,7 +1,7 @@
 import axios from 'axios' // 引入 axios
 
 /** http请求的基地址 */
-const baseUrl = 'https://localhost:27644'
+const baseUrl = 'https://localhost:27644/'
 
 /**
  * 创建axios请求实例
@@ -14,7 +14,7 @@ function createAxiosInstance (contentType) {
     withCredentials: true,
     timeout: 10000, // 请求的过期时间
     headers: {
-      'Content-Type': contentType === 'formdata' ? 'application/x-www-form-urlencoded' : 'application/json',
+      'Content-Type': contentType === 'formdata' ? 'application/json' : 'application/json', // application/x-www-form-urlencoded
       // 'content-type': "application/json;charset=utf-8",
       Authorization: 'Bearer ' + (sessionStorage.getItem('token') || '') // token
     }

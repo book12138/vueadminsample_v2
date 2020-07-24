@@ -85,7 +85,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           const h = this.$createElement
-          this.$notify({
+          this.$notify.info({
             title: '登录通知',
             message: h(
               'i',
@@ -97,8 +97,8 @@ export default {
           _post(
             api.login,
             {
-              Name: this.form.username,
-              Password: this.form.password
+              name: this.form.username,
+              password: this.form.password
             },
             succRes => {
               this.$notify({
@@ -114,12 +114,13 @@ export default {
                     'i',
                     { style: 'color: teal' },
                     '成功获取token，有效期为两个小时，3秒后将进行跳转'
-                  )
+                  ),
+                  type: 'success'
                 })
 
                 console.log(this.routeRedirectTarget)
                 console.log('准备存储token')
-                // this.setToken(succRes.token); //存储token
+                // this.setToken(succRes.token) // 存储token
                 this.$store.commit('global/setToken', succRes.token) // 存储token，这个是无奈中选择的一种办法，上面那种写法，会在actions中丢失，执行不到mutations中方法
                 console.log('准备好设置定时器跳转')
                 setTimeout(() => {
@@ -132,7 +133,10 @@ export default {
               }
             },
             failRes => {
-              console.log('登录失败')
+              this.$notify.error({
+                title: '登录错误',
+                message: '请求服务器失败'
+              })
             }
           )
         }

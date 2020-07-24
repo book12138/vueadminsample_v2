@@ -9,11 +9,15 @@ import '@/global/globalCss.less'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/font/ali-font.less'
 import 'font-awesome/css/font-awesome.css'
+import iconPicker from 'e-icon-picker'
+import 'e-icon-picker/dist/index.css'// 基础样式
+import 'e-icon-picker/dist/main.css' // fontAwesome 图标库样式
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
 Vue.use(VueAxios, Axios)
+Vue.use(iconPicker)
 
 Vue.prototype.$store = store
 

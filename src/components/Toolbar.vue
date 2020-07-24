@@ -14,18 +14,18 @@
 </template>
 <script>
 export default {
-  name: "Toolbar",
-  data() {
+  name: 'Toolbar',
+  data () {
     return {
-      searchVal: "" //双向绑定搜索内容
-    };
+      searchVal: '' // 双向绑定搜索内容
+    }
   },
-  props: ["buttonList"], //接受父组件传值
+  props: ['buttonList'], // 接受父组件传值
   methods: {
-    callFunc(item) {
-      item.search = this.searchVal;
-      this.$emit("callFunction", item); //将值传给父组件
+    callFunc (item) {
+      item.search = this.searchVal
+      this.$emit('callFunction', item) // 将值传给父组件
     }
   }
-};
+}
 </script>

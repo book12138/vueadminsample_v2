@@ -144,7 +144,7 @@
           <el-cascader
             style="width: 400px"
             v-model="editForm.parentId"
-            :options="options"
+            :options="menuSelectData"
             filterable
             change-on-select
           ></el-cascader>
@@ -165,7 +165,7 @@
     >
       <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
         <el-form-item label="菜单名称" prop="name">
-          <el-input v-model="addForm.Name" auto-complete="off" placeholder="请输入菜单名称" maxlength="8" show-word-limit></el-input>
+          <el-input v-model="addForm.name" auto-complete="off" placeholder="请输入菜单名称" maxlength="8" show-word-limit></el-input>
         </el-form-item>
         <el-form-item label="路由地址" prop="url">
           <el-tooltip class="item" effect="dark" content="例如：/sample/01" placement="top-start">
@@ -187,13 +187,14 @@
         </el-form-item>
         <el-form-item label="图标" prop="icon">
           <e-icon-picker v-model="addForm.icon" placeholder="请选择图标"/>
-          <el-input v-model="addForm.icon" placeholder="请输入图标" maxlength="30" show-word-limit auto-complete="off"></el-input>
+          <!-- <el-input v-model="addForm.icon" placeholder="请输入图标" maxlength="30" show-word-limit auto-complete="off"></el-input> -->
+          <!-- <e-icon-picker v-model="addForm.icon" /> -->
         </el-form-item>
         <el-form-item prop="parentId" label="父级菜单" width sortable>
           <el-cascader
             style="width: 400px"
             v-model="addForm.parentId"
-            :options="options"
+            :options="menuSelectData"
             filterable
             change-on-select
             placeholder="请选择父级菜单，如果是顶级菜单，请置为空"
@@ -226,7 +227,7 @@ export default {
     return {
       buttonList: [],
       currentRow: null,
-      options: [],
+      menuSelectData: [],
       filters: {
         Name: ''
       },
@@ -246,12 +247,10 @@ export default {
       editLoading: false,
 
       editFormRules: {
-        name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
-        url: [{ required: true, message: '请输入路由地址', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }]
       },
       addFormRules: {
-        name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
-        url: [{ required: true, message: '请输入路由地址', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }]
       },
 
       addFormVisible: false, // 新增界面是否显示
@@ -384,8 +383,24 @@ export default {
         },
         data => {
           this.addLoading = false
+          if (data.isTrue) {
+            this.$notify({
+              title: '操作通知',
+              message: '菜单添加成功',
+              type: 'success'
+            })
+          } else {
+            this.$notify.error({
+              title: '操作通知',
+              message: '菜单添加失败'
+            })
+          }
         }, fail => {
           this.addLoading = false
+          this.$notify.error({
+            title: '操作通知',
+            message: '菜单添加失败'
+          })
         })
     },
     // 编辑
@@ -413,14 +428,9 @@ export default {
   },
   /** 页面初始化完成后 */
   mounted () {
-    // this.getPermissions();
-    // getModuleListPage().then((res) => {
-    //     this.modules = res.data.response.data;
-    // });
-    // let routers = window.localStorage.router
-    // ? JSON.parse(window.localStorage.router)
-    // : [];
-    // this.buttonList = getButtonList(this.$route.path, routers);
+    _post({}, api.getMenuCascaderData, data => {
+      this.menuSelectData = data
+    })
   }
 }
 </script>

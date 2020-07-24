@@ -56,7 +56,7 @@
 
 <script>
 export default {
-  name: "Sidebar",
+  name: 'Sidebar',
   props: {
     item: {
       type: Object,
@@ -64,10 +64,10 @@ export default {
     }
   },
   methods: {
-    cop: function() {
+    cop: function () {
       // 子组件中触发父组件方法collaFa并传值123
-      this.$emit("collaFa", "123");
+      this.$emit('collaFa', '123')
     }
   }
-};
+}
 </script>
