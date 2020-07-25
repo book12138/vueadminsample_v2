@@ -220,7 +220,7 @@
 
 <script>
 import { api } from '@/global/api'
-import { _post } from '@/util/axiosRequest'
+import { _post, _get } from '@/util/axiosRequest'
 
 export default {
   data () {
@@ -428,7 +428,8 @@ export default {
   },
   /** 页面初始化完成后 */
   mounted () {
-    _post({}, api.getMenuCascaderData, data => {
+    console.log('开始请求 cascader 的数据')
+    _get(api.getMenuCascaderData, {}, data => {
       this.menuSelectData = data
     })
   }

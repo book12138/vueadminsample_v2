@@ -39,11 +39,10 @@ function createAxiosInstance (contentType) {
  * @param succCallBackHandler 请求成功时执行的回调
  * @param failCallBackHandler 请求失败时执行的回调
  */
-function _get (api, params, succCallBackHandler, failCallBackHandler) {
+function _get (api, params, succCallBackHandler, failCallBackHandler = errorInfo => { console.log('+++++++请求失败，失败信息为：' + errorInfo) }) {
   const http = createAxiosInstance('querystring')
-  http.get(api, {
-    params: params
-  })
+  console.log('即将开始发送get请求')
+  http.get(api, params)
     .then((response) => {
       if (response.status === 200) succCallBackHandler(response.data)
       else {
@@ -53,6 +52,7 @@ function _get (api, params, succCallBackHandler, failCallBackHandler) {
     })
     .catch((error) => {
       failCallBackHandler(error)
+      console.log('请求地址为：' + api)
     })
 }
 
@@ -63,9 +63,9 @@ function _get (api, params, succCallBackHandler, failCallBackHandler) {
  * @param succCallBackHandler 请求成功时执行的回调
  * @param failCallBackHandler 请求失败时执行的回调
  */
-function _post (api, params, succCallBackHandler, failCallBackHandler) {
+function _post (api, params, succCallBackHandler, failCallBackHandler = errorInfo => { console.log('+++++++请求失败，失败信息为：' + errorInfo) }) {
   const http = createAxiosInstance('formdata')
-  console.log('即将开始发送请求')
+  console.log('即将开始发送post请求')
   http.post(api, params)
     .then((response) => {
       if (response.status === 200) succCallBackHandler(response.data)
@@ -76,6 +76,7 @@ function _post (api, params, succCallBackHandler, failCallBackHandler) {
     })
     .catch((error) => {
       failCallBackHandler(error)
+      console.log('请求地址为：' + api)
     })
 }
 
@@ -86,7 +87,7 @@ function _post (api, params, succCallBackHandler, failCallBackHandler) {
 * @param succCallBackHandler 请求成功时执行的回调
 * @param failCallBackHandler 请求失败时执行的回调
 */
-function _put (api, params, succCallBackHandler, failCallBackHandler) {
+function _put (api, params, succCallBackHandler, failCallBackHandler = errorInfo => { console.log('+++++++请求失败，失败信息为：' + errorInfo) }) {
   const http = createAxiosInstance('formdata')
   http.put(api, params)
     .then((response) => {
@@ -108,7 +109,7 @@ function _put (api, params, succCallBackHandler, failCallBackHandler) {
 * @param succCallBackHandler 请求成功时执行的回调
 * @param failCallBackHandler 请求失败时执行的回调
 */
-function _delete (api, params, succCallBackHandler, failCallBackHandler) {
+function _delete (api, params, succCallBackHandler, failCallBackHandler = errorInfo => { console.log('+++++++请求失败，失败信息为：' + errorInfo) }) {
   const http = createAxiosInstance('querystring')
   http.delete(api, params)
     .then((response) => {
